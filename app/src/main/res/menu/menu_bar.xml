@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 一律顯示在選單裡-->
+    <item
+        android:id="@+id/action_login"
+        android:orderInCategory="10"
+        android:title="用戶登入"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="20"
+        android:title="用戶登出"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search"
+        android:title="Search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom" />
+</menu>

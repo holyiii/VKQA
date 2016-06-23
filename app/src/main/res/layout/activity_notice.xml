@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:toolbar="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/SwipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/edtPost"
+            android:layout_alignParentEnd="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/edtPost"
+                android:layout_alignEnd="@+id/btnSentPost"
+                android:layout_below="@+id/toolbar"
+                android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+
+        <Button
+            android:id="@+id/btnSentPost"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/post" />
+
+        <EditText
+            android:id="@+id/edtPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/btnSentPost"
+            android:ems="12"
+            android:inputType="textMultiLine" />
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sp_tag"
+            android:entries="@array/sp_taglist"
+            style="@android:style/Widget.Holo.TextView.SpinnerItem"
+            android:spinnerMode="dropdown"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/edtPost"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/btnSentPost" />
+
+    </RelativeLayout>
+
+</LinearLayout>
