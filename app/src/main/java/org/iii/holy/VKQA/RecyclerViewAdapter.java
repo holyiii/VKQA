@@ -206,7 +206,7 @@ public class RecyclerViewAdapter extends Adapter<ViewHolder> {
             tvContext = (TextView) view.findViewById(R.id.tv_context);
             tvArticleID = (TextView) view.findViewById(R.id.tv_articleID);
             imgHead = (ImageView) view.findViewById(R.id.imgUsr);
-            tvTag=(TextView) view.findViewById(R.id.tv_tag);
+            tvTag = (TextView) view.findViewById(R.id.tv_tag);
             tvArticleInfo = (TextView) view.findViewById(R.id.tv_articleInfo);
             tvKarma = (TextView) view.findViewById(R.id.tv_karma);
             imgVoteGood = (ImageView) view.findViewById(R.id.img_VoteGood);
@@ -263,7 +263,7 @@ public class RecyclerViewAdapter extends Adapter<ViewHolder> {
                         progressChanged = progress;
                         boolean bQuestion = tvArticleInfo.getText().toString().contains("有深度");
                         long Aid = Long.parseLong(tvArticleID.getText().toString());
-                        int voteNum=vote(progressChanged, bQuestion, Aid);
+                        int voteNum = vote(progressChanged, bQuestion, Aid);
                     }
 
                 }

@@ -52,8 +52,8 @@ import butterknife.InjectView;
 public class MainActivity extends AppCompatActivity {
 
 
-    private final String sHostip = "http://140.92.63.141:8080";
-    //private final String sHostip = "http://210.61.217.168:28080";
+    //private final String sHostip = "http://140.92.63.141:8080";
+    private final String sHostip = "http://210.61.217.168:28080";
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
     @InjectView(R.id.recyclerView)
