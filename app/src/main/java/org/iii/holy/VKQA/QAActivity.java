@@ -2,6 +2,7 @@ package org.iii.holy.VKQA;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -49,11 +50,11 @@ import butterknife.InjectView;
 /**
  * @author Leo
  */
-public class MainActivity extends AppCompatActivity {
+public class QAActivity extends AppCompatActivity {
 
 
-    //private final String sHostip = "http://140.92.63.141:8080";
-    private final String sHostip = "http://210.61.217.168:28080";
+    private final String sHostip = "http://140.92.63.141:8080";
+    //private final String sHostip = "http://210.61.217.168:28080";
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
     @InjectView(R.id.recyclerView)
@@ -72,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, data);
     private Handler handler = new Handler();
     private Spinner spTag;
+    private int TopicID;
+    public int getTopicID(){return this.TopicID;}
+    public void setTopicID(int TopicID){this.TopicID=TopicID;}
+
 
     public String getHostIp() {
         return this.sHostip;
@@ -119,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //loginInfo = login("abc123","1111");
+
         setContentView(R.layout.activity_notice);
         btnPost = (Button) findViewById(R.id.btnSentPost);
         edtPost = (EditText) findViewById(R.id.edtPost);
@@ -128,7 +133,12 @@ public class MainActivity extends AppCompatActivity {
         restfulobj = new RestFulSrv(this);
         initView();
         initData();
-
+        Bundle bundle = getIntent().getBundleExtra("Bundle");
+        String name=bundle.getString("name");
+        String token=bundle.getString("token");
+        int topicid=bundle.getInt("topicID");
+        login(name,token);
+        setTopicID(topicid);
 
         btnPost.setOnClickListener(new Button.OnClickListener() {
 
@@ -167,16 +177,16 @@ public class MainActivity extends AppCompatActivity {
                                         }, 100);
 
                                         if (imm.isActive())
-                                            imm.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                                            imm.hideSoftInputFromWindow(QAActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
 
                                     } else {
-                                        toast = Toast.makeText(MainActivity.this,
+                                        toast = Toast.makeText(QAActivity.this,
                                                 "第一行必須至少15字，第二行之後必須至少30字", Toast.LENGTH_SHORT);
                                         toast.show();
                                     }
                                 } else {
-                                    toast = Toast.makeText(MainActivity.this,
+                                    toast = Toast.makeText(QAActivity.this,
                                             "請輸入兩行文字以上，第一行必須至少15字，第二行之後必須至少30字", Toast.LENGTH_SHORT);
                                     //顯示Toast
                                     toast.show();
@@ -192,9 +202,9 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     }, 100);
                                     if (imm.isActive())
-                                        imm.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                                        imm.hideSoftInputFromWindow(QAActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                                 } else {
-                                    toast = Toast.makeText(MainActivity.this,
+                                    toast = Toast.makeText(QAActivity.this,
                                             "回答之文字必須多於30字", Toast.LENGTH_SHORT);
                                     toast.show();
                                 }
@@ -203,13 +213,13 @@ public class MainActivity extends AppCompatActivity {
 
                     } else {
 
-                        toast = Toast.makeText(MainActivity.this,
+                        toast = Toast.makeText(QAActivity.this,
                                 "帳戶登入失敗", Toast.LENGTH_SHORT);
                         toast.show();
                     }
 
                 } else {
-                    toast = Toast.makeText(MainActivity.this,
+                    toast = Toast.makeText(QAActivity.this,
                             "網路連線異常", Toast.LENGTH_SHORT);
                     toast.show();
 
@@ -228,6 +238,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void back2Topic()
+    {
+        Intent intent = new Intent();
+        intent.setClass(this , MainTopic.class);
+        startActivity(intent);
+
+    }
     public void setQlistStyle() //set Q page Style
     {
         RListType = 1;
@@ -238,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //finish();
+                back2Topic();
             }
         });
         spTag.setEnabled(true);
@@ -387,7 +404,6 @@ public class MainActivity extends AppCompatActivity {
                 adapter.showfoot();
                 getQpageData(0, 34);
                 adapter.hidefoot();
-                toolbar.setSubtitle("遊客");
                 getKarmaRule();
             }
         }, 1000);
@@ -406,7 +422,7 @@ public class MainActivity extends AppCompatActivity {
             restfulobj.get(sHostip + "/api/q/list/" + (int) pagenum);
             lastgetpara = (int) pagenum;
         } else {
-            Toast toast = Toast.makeText(MainActivity.this,
+            Toast toast = Toast.makeText(QAActivity.this,
                     "網路連線異常", Toast.LENGTH_SHORT);
             toast.show();
         }
@@ -475,7 +491,7 @@ public class MainActivity extends AppCompatActivity {
             lastgetpara = (int) articleID;
 
         } else {
-            Toast toast = Toast.makeText(MainActivity.this,
+            Toast toast = Toast.makeText(QAActivity.this,
                     "網路連線異常", Toast.LENGTH_SHORT);
             toast.show();
         }
@@ -575,7 +591,7 @@ public class MainActivity extends AppCompatActivity {
             restfulobj.post(sHostip + "/api/auth", "login", sloginItem);
 
         } else {
-            Toast toast = Toast.makeText(MainActivity.this,
+            Toast toast = Toast.makeText(QAActivity.this,
                     "網路連線異常", Toast.LENGTH_SHORT);
             toast.show();
 
@@ -590,14 +606,11 @@ public class MainActivity extends AppCompatActivity {
         if (mAuser != null && mAuser.isSuccess()) {
             toolbar.setSubtitle("Hi, " + mAuser.getUser().getName().toString());
             adapter.setAuth(mAuser);
-            Toast toast = Toast.makeText(MainActivity.this,
-                    "登入成功", Toast.LENGTH_SHORT);
-            toast.show();
             adapter.notifyDataSetChanged();
         } else {
             toolbar.setSubtitle("遊客");
             adapter.clearAuth();
-            Toast toast = Toast.makeText(MainActivity.this,
+            Toast toast = Toast.makeText(QAActivity.this,
                     "無法登入", Toast.LENGTH_SHORT);
             toast.show();
             loginInfo = null;
@@ -613,7 +626,7 @@ public class MainActivity extends AppCompatActivity {
             restfulobj.get(sHostip + "/api/logout");
 
         } else {
-            Toast toast = Toast.makeText(MainActivity.this,
+            Toast toast = Toast.makeText(QAActivity.this,
                     "網路連線異常", Toast.LENGTH_SHORT);
             toast.show();
 
@@ -629,7 +642,7 @@ public class MainActivity extends AppCompatActivity {
             Auth mAuser = gson.fromJson(sLogout, Auth.class);
 
             if (mAuser != null && mAuser.isSuccess()) {
-                Toast toast = Toast.makeText(MainActivity.this,
+                Toast toast = Toast.makeText(QAActivity.this,
                         "登出成功", Toast.LENGTH_SHORT);
                 toast.show();
                 loginInfo = null;
@@ -639,14 +652,14 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
 
             } else {
-                Toast toast = Toast.makeText(MainActivity.this,
+                Toast toast = Toast.makeText(QAActivity.this,
                         "登出失敗", Toast.LENGTH_SHORT);
                 toast.show();
             }
 
 
         } else {
-            Toast toast = Toast.makeText(MainActivity.this,
+            Toast toast = Toast.makeText(QAActivity.this,
                     "登出失敗", Toast.LENGTH_SHORT);
             toast.show();
         }
@@ -678,7 +691,7 @@ public class MainActivity extends AppCompatActivity {
         if (bNetisConn) {
             restfulobj.get(sHostip + "/api/karmaRule");
         } else {
-            Toast toast = Toast.makeText(MainActivity.this,
+            Toast toast = Toast.makeText(QAActivity.this,
                     "網路連線異常", Toast.LENGTH_SHORT);
             toast.show();
 
@@ -721,7 +734,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void connectError(Map<String, Object> resResult) {
         String errorMsg = resResult.get("body").toString();
-        Toast toast = Toast.makeText(MainActivity.this,
+        Toast toast = Toast.makeText(QAActivity.this,
                 errorMsg, Toast.LENGTH_SHORT);
         toast.show();
     }

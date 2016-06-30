@@ -41,7 +41,7 @@ public class RecyclerViewAdapter extends Adapter<ViewHolder> {
     public RecyclerViewAdapter(Context context, List data) {
         this.context = context;
         this.data = data;
-        hostip = ((MainActivity) context).getHostIp();
+        hostip = ((QAActivity) context).getHostIp();
     }
 
     public void setKarmaRule(detailKarmaRule karmaRule) {

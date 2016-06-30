@@ -160,26 +160,26 @@ public class RestFulSrv extends AsyncTask<String, Void, Map<String, Object>> {
         if (s != null) {
             String sAPIurl = s.get("fromAPI").toString();
             if (sAPIurl.contains("/api/q/list/")) {
-                ((MainActivity) mContext).freshQpageUI(s);
+                ((QAActivity) mContext).freshQpageUI(s);
             }
             if (sAPIurl.contains("/api/karmaRule")) {
-                ((MainActivity) mContext).setKarma(s);
+                ((QAActivity) mContext).setKarma(s);
             }
             if (sAPIurl.contains("/api/qDetail/get/")) {
-                ((MainActivity) mContext).freshApageUI(s);
+                ((QAActivity) mContext).freshApageUI(s);
             }
             if (sAPIurl.contains("/api/auth")) {
-                ((MainActivity) mContext).setAuth(s);
+                ((QAActivity) mContext).setAuth(s);
             }
             if (sAPIurl.contains("/api/logout")) {
-                ((MainActivity) mContext).freshLogoutUI(s);
+                ((QAActivity) mContext).freshLogoutUI(s);
             }
             if (sAPIurl.contains("/api/q/new") || sAPIurl.contains("api/q/newAnswer/")) {
-                ((MainActivity) mContext).RefreshQA();
+                ((QAActivity) mContext).RefreshQA();
             }
             if (sAPIurl.contains("Error"))
             {
-                ((MainActivity) mContext).connectError(s);
+                ((QAActivity) mContext).connectError(s);
             }
 
 

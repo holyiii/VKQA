@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:toolbar="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp" />
+
+    <ImageButton
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:id="@+id/ibtnENQ"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="80dp" />
+
+    <ImageButton
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:id="@+id/ibtnPWQ"
+        android:layout_marginStart="28dp"
+        android:layout_alignTop="@+id/ibtnENQ"
+        android:layout_toEndOf="@+id/ibtnENQ" />
+
+    <ImageButton
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:id="@+id/ibtnACQ"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/ibtnENQ"
+        android:layout_alignStart="@+id/ibtnENQ" />
+
+    <ImageButton
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:id="@+id/ibtnBKQ"
+        android:layout_alignTop="@+id/ibtnACQ"
+        android:layout_alignStart="@+id/ibtnPWQ" />
+
+    <ImageButton
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:id="@+id/ibtnETQ"
+        android:layout_below="@+id/ibtnACQ"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+
+</RelativeLayout>

@@ -17,7 +17,8 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:navigationIcon="?attr/homeAsUpIndicator"
             android:transitionGroup="false"
-            style="@style/AppTheme">
+            style="@style/AppTheme"
+            app:title="CarQ">
 
         </android.support.v7.widget.Toolbar>
 
