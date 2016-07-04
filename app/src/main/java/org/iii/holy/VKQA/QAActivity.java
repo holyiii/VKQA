@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +21,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -53,7 +51,9 @@ import butterknife.InjectView;
 public class QAActivity extends AppCompatActivity {
 
 
-    private final String sHostip = "http://140.92.63.141:8080";
+    //private final String sHostip = "http://140.92.63.141:8080";
+    private final String sHostip="http://140.92.63.208:28080";  //  銘隆 server http://140.92.63.208:28080/carQHomeIndex
+
     //private final String sHostip = "http://210.61.217.168:28080";
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
@@ -72,10 +72,9 @@ public class QAActivity extends AppCompatActivity {
     private List<Map<String, Object>> data = new ArrayList<>();
     private RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, data);
     private Handler handler = new Handler();
-    private Spinner spTag;
-    private int TopicID;
-    public int getTopicID(){return this.TopicID;}
-    public void setTopicID(int TopicID){this.TopicID=TopicID;}
+    private String SubClassification;
+    public String getSubTopic(){return this.SubClassification;}
+    public void setSubTopic(String SubTopic){this.SubClassification=SubTopic;}
 
 
     public String getHostIp() {
@@ -128,7 +127,6 @@ public class QAActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notice);
         btnPost = (Button) findViewById(R.id.btnSentPost);
         edtPost = (EditText) findViewById(R.id.edtPost);
-        spTag = (Spinner) findViewById(R.id.sp_tag);
         ButterKnife.inject(this);
         restfulobj = new RestFulSrv(this);
         initView();
@@ -136,9 +134,9 @@ public class QAActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getBundleExtra("Bundle");
         String name=bundle.getString("name");
         String token=bundle.getString("token");
-        int topicid=bundle.getInt("topicID");
+        String subtopic=bundle.getString("subtopic");
         login(name,token);
-        setTopicID(topicid);
+        setSubTopic(subtopic);
 
         btnPost.setOnClickListener(new Button.OnClickListener() {
 
@@ -166,9 +164,8 @@ public class QAActivity extends AppCompatActivity {
                                     for (int i = 1; i < sAryTitleContents.length; i++)
                                         sPostContent = sPostContent + sAryTitleContents[i] + "\n";
                                     if (sPostTitle.length() > 15 && sPostContent.length() > 30) {
-                                        int TagType = spTag.getSelectedItemPosition();
-                                        String sArrayTag[] = {"repair", "trade", "insurance", "misc"};
-                                        postQuestion(sPostTitle, sPostContent, sArrayTag[TagType]);
+
+                                        postQuestion(sPostTitle, sPostContent, getSubTopic());
                                         handler.postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
@@ -258,7 +255,7 @@ public class QAActivity extends AppCompatActivity {
                 back2Topic();
             }
         });
-        spTag.setEnabled(true);
+
     }
 
     public void setQAlistStyle() // Set QA page Style
@@ -276,7 +273,7 @@ public class QAActivity extends AppCompatActivity {
                 getQpageData(0, 34);
             }
         });
-        spTag.setEnabled(false);
+
     }
 
     public void initView() {
@@ -454,14 +451,17 @@ public class QAActivity extends AppCompatActivity {
                 if (!bTagEmpty) {
                     String eTag = qlist.get(i).getTagList().get(0).getName();
                     switch (eTag) {
-                        case "repair":
-                            cTag = "維修保養";
+                        case "engine":
+                            cTag = "引擎問題";
                             break;
-                        case "trade":
-                            cTag = "買賣交易";
+                        case "power":
+                            cTag = "動力問題";
                             break;
-                        case "insurance":
-                            cTag = "車輛保險";
+                        case "air-conditioning":
+                            cTag = "冷氣問題";
+                            break;
+                        case "brakes":
+                            cTag = "煞車問題";
                             break;
                         default:
                             cTag = "其它問題";
@@ -535,14 +535,17 @@ public class QAActivity extends AppCompatActivity {
             if (!bTagEmpty) {
                 String eTag = qitem.getTagList().get(0).getName();
                 switch (eTag) {
-                    case "repair":
-                        cTag = "維修保養";
+                    case "engine":
+                        cTag = "引擎問題";
                         break;
-                    case "trade":
-                        cTag = "買賣交易";
+                    case "power":
+                        cTag = "動力問題";
                         break;
-                    case "insurance":
-                        cTag = "車輛保險";
+                    case "air-conditioning":
+                        cTag = "冷氣問題";
+                        break;
+                    case "brakes":
+                        cTag = "煞車問題";
                         break;
                     default:
                         cTag = "其它問題";

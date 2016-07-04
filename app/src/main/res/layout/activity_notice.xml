@@ -51,21 +51,10 @@
             android:id="@+id/edtPost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="11"
             android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/btnSentPost"
-            android:inputType="textMultiLine" />
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/sp_tag"
-            android:entries="@array/sp_taglist"
-            android:spinnerMode="dropdown"
-            android:layout_toStartOf="@+id/edtPost"
-            android:layout_alignParentLeft="true"
-            android:layout_alignTop="@+id/btnSentPost"
-            android:layout_alignParentBottom="true"
-            />
+            android:inputType="textMultiLine"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/btnSentPost" />
 
     </RelativeLayout>
 

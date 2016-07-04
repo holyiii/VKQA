@@ -47,46 +47,48 @@ public class MainTopic extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             // TODO Auto-generated method stub
-            enterTopic(1);
+            enterTopic("engine");
         }
     };
     private View.OnClickListener pwqLis=new View.OnClickListener(){
         @Override
         public void onClick(View v) {
             // TODO Auto-generated method stub
-            enterTopic(2);
+            enterTopic("power");
         }
     };
     private View.OnClickListener acqLis=new View.OnClickListener(){
         @Override
         public void onClick(View v) {
             // TODO Auto-generated method stub
-            enterTopic(3);
+            enterTopic("air-conditioning");
         }
     };
     private View.OnClickListener bkqLis=new View.OnClickListener(){
         @Override
         public void onClick(View v) {
             // TODO Auto-generated method stub
-            enterTopic(4);
+            enterTopic("brakes");
         }
     };
     private View.OnClickListener etqLis=new View.OnClickListener(){
         @Override
         public void onClick(View v) {
             // TODO Auto-generated method stub
-            enterTopic(5);
+            enterTopic("others");
         }
     };
 
-    private void enterTopic(int TopicID)
+    private void enterTopic(String SubTopic)
     {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
 
-        bundle.putInt("topicID", TopicID);
+        bundle.putString("subtopic", SubTopic);
+        //使用者帳號資訊 Start
         bundle.putString("name" , "ABC123");
         bundle.putString("token" , "zzzzzz");
+        //使用者帳號資訊 End
         intent.putExtra("Bundle" , bundle);
         intent.setClass(this , QAActivity.class);
         startActivity(intent);
